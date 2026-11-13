@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "opencv: build",
+            "type": "shell",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-std=c++17",
+                "-fexec-charset=GBK",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-I",
+                "D:\\opencv4.6\\opencv\\build\\include",
+                "-L",
+                "D:\\opencv4.6\\opencv\\build\\x64\\mingw\\lib",
+                "-lopencv_world460"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "detail": "用 MinGW g++ 编译当前文件并链接 opencv_world460"
+        },
+        {
+            "label": "opencv: build & run",
+            "type": "shell",
+            "command": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "dependsOn": "opencv: build",
+            "options": {
+                "cwd": "${fileDirname}",
+                "env": {
+                    "PATH": "D:\\opencv4.6\\opencv\\build\\x64\\mingw\\bin;C:\\mingw64\\bin;${env:PATH}"
+                }
+            },
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "先编译再运行，运行前把 OpenCV DLL 目录加入 PATH"
+        }
+    ]
+}

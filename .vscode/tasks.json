@@ -1,0 +1,51 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build & run clip_count",
+            "type": "shell",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-g",
+                "-std=c++17",
+                "${workspaceFolder}\\lab1\\clip_count.cpp",
+                "-o",
+                "${workspaceFolder}\\lab1\\clip_count.exe",
+                "-ID:\\opencv4.6\\opencv\\build\\include",
+                "-LD:\\opencv4.6\\opencv\\build\\x64\\mingw\\lib",
+                "-lopencv_world460"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            // 运行前把 OpenCV 的 DLL 目录加入 PATH，保证 exe 能找到 opencv_world460.dll
+            "options": {
+                "env": {
+                    "PATH": "D:\\opencv4.6\\opencv\\build\\x64\\mingw\\bin;${env:PATH}"
+                }
+            },
+            "problemMatcher": ["$gcc"],
+            // 编译成功后自动在集成终端运行
+            "dependsOn": []
+        },
+        {
+            "label": "run clip_count",
+            "type": "shell",
+            "command": "cmd.exe",
+            "args": [
+                "/c",
+                "chcp 65001 >nul && ${workspaceFolder}\\lab1\\clip_count.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}\\lab1",
+                "env": {
+                    "PATH": "D:\\opencv4.6\\opencv\\build\\x64\\mingw\\bin;${env:PATH}"
+                }
+            },
+            "dependsOn": ["build & run clip_count"],
+            "group": "test",
+            "problemMatcher": []
+        }
+    ]
+}
